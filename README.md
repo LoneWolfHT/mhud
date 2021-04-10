@@ -1,9 +1,33 @@
 # MHud
 A wrapper for more easily managing Minetest HUDs
 
+# API
 You can add this mod as a dependency in your mod.conf, or you can copy the `mhud.lua` file into your mod and use it that way
 
-# API
+## Mod-Specific Functions
+
+* `mhud.init()`
+  Returns a hud wrapper you can use in your mod
+
+## Hud Wrapper Functions
+
+* `wrapper:add(<player>, [hud name], <def>)` -> `hud id`
+  * *player*: ObjectRef or PlayerName
+  * *hud name*: Name of hud, format should be: `modname:hudname`. Useful if you plan on changing the hud later
+  * *def*: [Hud Definition]
+
+* `wrapper:get(<player>, <name>)` -> `{id = hud id, def = [Hud Definition]}`
+  * *player*: ObjectRef or PlayerName
+  * *name*: Name (or id!) of the hud you want to get
+
+* `wrapper:change(<player>, <name>, <def>)`
+  * *player*: ObjectRef or PlayerName
+  * *name*: Name (or id!) of the hud you want to change
+  * *def*: [Hud Definition]
+
+* `wrapper: [remove|clear](<player>, [name])`
+  * *player*: ObjectRef or PlayerName
+  * *name*: Name (or id!) of the hud you want to remove. Leave out to remove all player's huds
 
 ## [Hud Definition]
 MHud definitions are exactly the same as Minetest's. With some stat aliases:
@@ -31,29 +55,3 @@ MHud definitions are exactly the same as Minetest's. With some stat aliases:
 ### image_waypoint
   * `texture` -> `text`
   * `image_scale` -> `def.size {x = def.image_scale}`
-
-#
-### Mod Version Functions
-
-* `mhud.init()`
-  Returns a hud wrapper you can use in your mod
-
-### Hud Wrapper Functions
-
-* `wrapper:add(<player>, [hud name], <def>)` -> `hud id`
-  * *player*: ObjectRef or PlayerName
-  * *hud name*: Name of hud, format should be: `modname:hudname`. Useful if you plan on changing the hud later
-  * *def*: [Hud Definition]
-
-* `wrapper:get(<player>, <name>)` -> `{id = hud id, def = [Hud Definition]}`
-  * *player*: ObjectRef or PlayerName
-  * *name*: Name (or id!) of the hud you want to get
-
-* `wrapper:change(<player>, <name>, <def>)`
-  * *player*: ObjectRef or PlayerName
-  * *name*: Name (or id!) of the hud you want to change
-  * *def*: `[Hud Definition]
-
-* `wrapper: [remove|clear](<player>, [name])`
-  * *player*: ObjectRef or PlayerName
-  * *name*: Name (or id!) of the hud you want to remove. Leave out to remove all player's huds
