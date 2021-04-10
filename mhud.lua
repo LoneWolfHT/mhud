@@ -54,8 +54,7 @@ function hud.add(self, player, name, def)
 	local pname = player:get_player_name()
 
 	if not def then
-		def = name
-		name = false
+		def, name = name, false
 	end
 
 	if not self.huds[pname] then
@@ -113,6 +112,8 @@ function hud.remove(self, player, name)
 		self.huds[pname] = nil
 	end
 end
+
+hud.clear = hud.remove
 
 minetest.register_on_leaveplayer(function(player)
 	hud:remove(player)
