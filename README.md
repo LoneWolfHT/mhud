@@ -16,7 +16,7 @@ You can add this mod as a dependency in your mod.conf, or you can copy the `mhud
   * *hud name*: Name of hud. Useful if you plan on changing the hud later
   * *def*: [Hud Definition]
 
-* `wrapper:get(<player>, <name>)` -> `{id = hud id, def = [Hud Definition]}`
+* `wrapper:[get | exists](<player>, <name>)` -> `{id = hud id, def = [Hud Definition]}` or `nil` if nonexistent
   * *player*: ObjectRef or PlayerName
   * *name*: Name (or id!) of the hud you want to get
 
@@ -25,7 +25,7 @@ You can add this mod as a dependency in your mod.conf, or you can copy the `mhud
   * *name*: Name (or id!) of the hud you want to change
   * *def*: [Hud Definition]
 
-* `wrapper: [remove|clear](<player>, [name])`
+* `wrapper:[remove|clear](<player>, [name])`
   * *player*: ObjectRef or PlayerName
   * *name*: Name (or id!) of the hud you want to remove. Leave out to remove all player's huds
 

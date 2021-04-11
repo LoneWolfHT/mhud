@@ -104,8 +104,11 @@ function hud.get(self, player, name)
 	player = Obj(player)
 	local pname = player:get_player_name()
 
-	return assert(self.huds[pname][name], "Attempt to get hud that doesn't exist!")
+	if self.huds[pname] then
+		return self.huds[pname][name]
+	end
 end
+hud.exists = hud.get
 
 function hud.change(self, player, name, def)
 	player = Obj(player)
@@ -138,7 +141,6 @@ function hud.remove(self, player, name)
 		self.huds[pname] = nil
 	end
 end
-
 hud.clear = hud.remove
 
 minetest.register_on_leaveplayer(function(player)
