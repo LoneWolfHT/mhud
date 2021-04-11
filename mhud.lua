@@ -53,7 +53,7 @@ local function convert_def(def, type)
 			elseif val == "center" then
 				def.alignment[axis] = 0
 			elseif val == "right" or val == "down" then
-				def.alignment = 1
+				def.alignment[axis] = 1
 			end
 		end
 	end
