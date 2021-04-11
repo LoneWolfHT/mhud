@@ -13,7 +13,7 @@ You can add this mod as a dependency in your mod.conf, or you can copy the `mhud
 
 * `wrapper:add(<player>, [hud name], <def>)` -> `hud id`
   * *player*: ObjectRef or PlayerName
-  * *hud name*: Name of hud, format should be: `modname:hudname`. Useful if you plan on changing the hud later
+  * *hud name*: Name of hud. Useful if you plan on changing the hud later
   * *def*: [Hud Definition]
 
 * `wrapper:get(<player>, <name>)` -> `{id = hud id, def = [Hud Definition]}`
