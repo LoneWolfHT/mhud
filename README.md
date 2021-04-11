@@ -30,8 +30,9 @@ You can add this mod as a dependency in your mod.conf, or you can copy the `mhud
   * *name*: Name (or id!) of the hud you want to remove. Leave out to remove all player's huds
 
 ## [Hud Definition]
-MHud definitions are exactly the same as Minetest's. With some stat aliases:
+MHud definitions are pretty much exactly the same as Minetest's. With some exceptions:
 
+### **Element Aliases**
 ### text
   * `color` -> `number`
   * `text_scale` -> `def.size {x = def.text_scale}`
@@ -55,3 +56,7 @@ MHud definitions are exactly the same as Minetest's. With some stat aliases:
 ### image_waypoint
   * `texture` -> `text`
   * `image_scale` -> `def.size {x = def.image_scale}`
+
+### **Misc**
+
+* for `alignment` and `direction` you can use up/left/right/down/center instead of the numbers used by the Minetest API

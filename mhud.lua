@@ -46,6 +46,32 @@ local function convert_def(def, type)
 		def.scale = def.scale or {x = def.image_scale}
 	end
 
+	if def.alignment then
+		for axis, val in pairs(def.alignment) do
+			if val == "left" or val == "up" then
+				def.alignment[axis] = -1
+			elseif val == "center" then
+				def.alignment[axis] = 0
+			elseif val == "right" or val == "down" then
+				def.alignment = 1
+			end
+		end
+	end
+
+	if def.direction then
+		for axis, val in pairs(def.alignment) do
+			if val == "right" then
+				def.direction[axis] = 0
+			elseif val == "left" then
+				def.direction[axis] = 1
+			elseif val == "down" then
+				def.direction[axis] = 2
+			elseif val == "up" then
+				def.direction[axis] = 3
+			end
+		end
+	end
+
 	return def
 end
 
