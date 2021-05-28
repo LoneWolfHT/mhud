@@ -4,6 +4,19 @@ A wrapper for more easily managing Minetest HUDs
 # API
 You can add this mod as a dependency in your mod.conf, or you can copy the `mhud.lua` file into your mod and use it that way
 
+Example usage:
+```lua
+local hud = mhud.init()
+hud:add(player, "test_hud", {
+  hud_elem_type = "text",
+  position = {x = 1, y = 0},
+  offset = {x = -6, y = 6},
+  alignment = {x = "left", y = "down"},
+  text = "Hello there",
+  color = 0x00FF00,
+})
+```
+
 ## Mod-Specific Functions
 
 * `mhud.init()`

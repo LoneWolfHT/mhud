@@ -2,7 +2,7 @@ local hud = {
 	huds = {}
 }
 
-local function Obj(player)
+local function get_playerobj(player)
 	if type(player) == "string" then
 		return minetest.get_player_by_name(player)
 	else
@@ -76,7 +76,7 @@ local function convert_def(def, type)
 end
 
 function hud.add(self, player, name, def)
-	player = Obj(player)
+	player = get_playerobj(player)
 	local pname = player:get_player_name()
 
 	if not def then
@@ -101,7 +101,7 @@ function hud.add(self, player, name, def)
 end
 
 function hud.get(self, player, name)
-	player = Obj(player)
+	player = get_playerobj(player)
 	local pname = player:get_player_name()
 
 	if self.huds[pname] then
@@ -111,7 +111,7 @@ end
 hud.exists = hud.get
 
 function hud.change(self, player, name, def)
-	player = Obj(player)
+	player = get_playerobj(player)
 	local pname = player:get_player_name()
 
 	assert(self.huds[pname][name], "Attempt to change hud that doesn't exist!")
@@ -125,7 +125,7 @@ function hud.change(self, player, name, def)
 end
 
 function hud.remove(self, player, name)
-	player = Obj(player)
+	player = get_playerobj(player)
 	local pname = player:get_player_name()
 
 	if name then
