@@ -143,6 +143,13 @@ function hud.remove(self, player, name)
 end
 hud.clear = hud.remove
 
+function hud.remove_all(self)
+	for player in pairs(self.huds) do
+		self:clear(player)
+	end
+end
+hud.clear_all = hud.remove_all
+
 minetest.register_on_leaveplayer(function(player)
 	hud:remove(player)
 end)

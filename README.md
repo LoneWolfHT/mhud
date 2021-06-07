@@ -24,6 +24,8 @@ hud:add(player, "test_hud", {
 
 ## Hud Wrapper Functions
 
+Hud names are per-player, so you can use the same hud name for two different players
+
 * `wrapper:add(<player>, [hud name], <def>)` -> `hud id`
   * *player*: ObjectRef or PlayerName
   * *hud name*: Name of hud. Useful if you plan on changing the hud later
@@ -41,6 +43,9 @@ hud:add(player, "test_hud", {
 * `wrapper:[remove|clear](<player>, [name])`
   * *player*: ObjectRef or PlayerName
   * *name*: Name (or id!) of the hud you want to remove. Leave out to remove all player's huds
+
+* `wrapper:[remove_all | clear_all]()`
+  * Removes all huds registered with `wrapper`
 
 ## [Hud Definition]
 MHud definitions are pretty much exactly the same as Minetest's. With some exceptions:
