@@ -56,7 +56,7 @@ MHud definitions are pretty much exactly the same as Minetest's. With some excep
   * `text_scale` -> `def.size {x = def.text_scale}`
 ### image
   * `texture` -> `text`
-  * `image_scale` -> `def.size {x = def.image_scale}`
+  * `image_scale` -> `def.size {x = def.image_scale, y = def.image_scale}`
 ### statbar
   * `texture` -> `text`
   * `textures {t1, t2}` -> `text`, `text2`

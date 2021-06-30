@@ -15,8 +15,8 @@ local function convert_def(def, type)
 		def.number = def.number or      def.color
 		def.size   = def.size   or {x = def.text_scale}
 	elseif type == "image" then
-		def.text  = def.text  or      def.texture
-		def.scale = def.scale or {x = def.image_scale}
+		def.text  = def.text  or  def.texture
+		def.scale = def.scale or (def.image_scale and {x = def.image_scale, y = def.image_scale})
 	elseif type == "statbar" then
 		if def.textures then
 			def.text  = def.textures[1]
@@ -43,7 +43,7 @@ local function convert_def(def, type)
 		def.number = def.number or def.color
 	elseif type == "image_waypoint" then
 		def.text  = def.text  or      def.texture
-		def.scale = def.scale or {x = def.image_scale}
+		def.scale = def.scale or (def.image_scale and {x = def.image_scale})
 	end
 
 	if def.alignment then
