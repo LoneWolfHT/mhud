@@ -13,7 +13,7 @@ end
 local function convert_def(def, type)
 	if type == "text" then
 		def.number = def.number or      def.color
-		def.size   = def.size   or {x = def.text_scale}
+		def.size   = def.size   or (def.text_scale and {x = def.text_scale})
 	elseif type == "image" then
 		def.text  = def.text  or  def.texture
 		def.scale = def.scale or (def.image_scale and {x = def.image_scale, y = def.image_scale})
