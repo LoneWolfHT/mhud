@@ -1,5 +1,7 @@
 mhud = {}
 
+local hud = dofile(minetest.get_modpath("mhud").."/mhud.lua")
+
 function mhud.init()
-	return dofile(minetest.get_modpath("mhud").."/mhud.lua")
+	return table.copy(hud)
 end
