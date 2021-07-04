@@ -10,6 +10,14 @@ local function get_playerobj(player)
 	end
 end
 
+local function get_playername(player)
+	if type(player) == "string" then
+		return player
+	elseif player and player.get_player_name then
+		return player:get_player_name()
+	end
+end
+
 local function convert_def(def, type)
 	if type == "text" then
 		def.number = def.number or      def.color
@@ -125,17 +133,22 @@ function hud.change(self, player, name, def)
 end
 
 function hud.remove(self, player, name)
-	player = get_playerobj(player)
-	local pname = player:get_player_name()
+	local pname = get_playername(player)
+	player = pname and minetest.get_player_by_name(pname)
 
 	if name then
 		assert(self.huds[pname][name], "Attempt to remove hud that doesn't exist!")
 
-		player:hud_remove(self.huds[pname][name].id)
+		if player then
+			player:hud_remove(self.huds[pname][name].id)
+		end
+
 		self.huds[pname][name] = nil
 	elseif self.huds[pname] then
-		for _, def in pairs(self.huds[pname]) do
-			player:hud_remove(def.id)
+		if player then
+			for _, def in pairs(self.huds[pname]) do
+				player:hud_remove(def.id)
+			end
 		end
 
 		self.huds[pname] = nil
