@@ -19,39 +19,66 @@ local function get_playername(player)
 end
 
 local function convert_def(def, type)
+	def = table.copy(def)
 	if type == "text" then
 		def.number = def.number or      def.color
+		def.color = nil
+
 		def.size   = def.size   or (def.text_scale and {x = def.text_scale})
+		def.text_scale = nil
 	elseif type == "image" then
 		def.text  = def.text  or  def.texture
+		def.texture = nil
+
 		def.scale = def.scale or (def.image_scale and {x = def.image_scale, y = def.image_scale})
+		def.image_scale = nil
 	elseif type == "statbar" then
 		if def.textures then
 			def.text  = def.textures[1]
 			def.text2 = def.textures[2]
+			def.textures = nil
 		else
 			def.text = def.text or def.texture
+			def.texture = nil
 		end
 
 		if def.lengths then
 			def.number = def.lengths[1]
 			def.item   = def.lengths[2]
+			def.lengths = nil
 		else
 			def.number = def.number or def.length
+			def.length = nil
 		end
 
 		def.size = def.size or def.force_image_size
+		def.force_image_size = nil
 	elseif type == "inventory" then
 		def.text   = def.text   or def.listname
+		def.listname = nil
+
 		def.number = def.number or def.size
+		def.size = nil
+
 		def.item   = def.item   or def.selected
+		def.selected = nil
 	elseif type == "waypoint" then
 		def.name   = def.name   or def.waypoint_text
+		def.waypoint_text = nil
+
 		def.text   = def.text   or def.suffix
+		def.suffix = nil
+
 		def.number = def.number or def.color
+		def.color = nil
 	elseif type == "image_waypoint" then
 		def.text  = def.text  or      def.texture
+		def.texture = nil
+
 		def.scale = def.scale or (def.image_scale and {x = def.image_scale})
+		def.image_scale = nil
+	else
+		minetest.log("error", "[MHUD] Hud type wasn't specified or is not supported")
 	end
 
 	if def.alignment then
