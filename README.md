@@ -1,4 +1,4 @@
-# MHud
+# [M]inetest [HUD]
 A wrapper for more easily managing Minetest HUDs
 
 # API
@@ -48,7 +48,7 @@ Hud names are per-player, so you can use the same hud name for two different pla
   * Removes all huds registered with `wrapper`
 
 ## [Hud Definition]
-MHud definitions are pretty much exactly the same as Minetest's. With some exceptions:
+MHud definitions are pretty much exactly the same as Minetest's. With some added aliases:
 
 ### **Element Aliases**
 ### text
