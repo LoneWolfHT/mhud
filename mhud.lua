@@ -3,17 +3,21 @@ local hud = {
 }
 
 local function get_playerobj(player)
-	if type(player) == "string" then
+	local type = type(player)
+
+	if type == "string" then
 		return minetest.get_player_by_name(player)
-	else
+	elseif type == "userdata" and player:is_player() then
 		return player
 	end
 end
 
 local function get_playername(player)
-	if type(player) == "string" then
+	local type = type(player)
+
+	if type == "string" then
 		return player
-	elseif player and player.get_player_name then
+	elseif type == "userdata" and player:is_player() then
 		return player:get_player_name()
 	end
 end
@@ -149,7 +153,7 @@ function hud.change(self, player, name, def)
 	player = get_playerobj(player)
 	local pname = player:get_player_name()
 
-	assert(self.huds[pname][name], "Attempt to change hud that doesn't exist!")
+	assert(self.huds[pname] and self.huds[pname][name], "Attempt to change hud that doesn't exist!")
 
 	def = convert_def(def, def.hud_elem_type or self.huds[pname][name].def.hud_elem_type)
 
@@ -164,7 +168,7 @@ function hud.remove(self, player, name)
 	player = pname and minetest.get_player_by_name(pname)
 
 	if name then
-		assert(self.huds[pname][name], "Attempt to remove hud that doesn't exist!")
+		assert(self.huds[pname] and self.huds[pname][name], "Attempt to remove hud that doesn't exist!")
 
 		if player then
 			player:hud_remove(self.huds[pname][name].id)
@@ -190,8 +194,10 @@ function hud.remove_all(self)
 end
 hud.clear_all = hud.remove_all
 
-minetest.register_on_leaveplayer(function(player)
-	hud:remove(player)
+minetest.register_on_mods_loaded(function()
+	minetest.register_on_leaveplayer(function(player)
+		hud:remove(player)
+	end)
 end)
 
 return hud
