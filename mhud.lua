@@ -115,8 +115,10 @@ local function convert_def(def, type)
 end
 
 function hud.add(self, player, name, def)
-	player = get_playerobj(player)
-	local pname = player:get_player_name()
+	local pobj = get_playerobj(player)
+	assert(pobj, "Attempt to add hud to offline player!")
+
+	local pname = get_playername(player)
 
 	if not def then
 		def, name = name, false
@@ -128,9 +130,11 @@ function hud.add(self, player, name, def)
 
 	def = convert_def(def, def.hud_elem_type)
 
-	local id = player:hud_add(def)
+	local id = pobj:hud_add(def)
 
 	if name then
+		assert(not self.huds[pname][name], "Attempt to overwrite an existing hud!")
+
 		self.huds[pname][name] = {id = id, def = def}
 	else
 		self.huds[pname][id] = {id = id, def = def}
@@ -140,45 +144,45 @@ function hud.add(self, player, name, def)
 end
 
 function hud.get(self, player, name)
-	player = get_playerobj(player)
-	local pname = player:get_player_name()
+	local pname = get_playername(player)
 
-	if self.huds[pname] then
+	if pname and self.huds[pname] then
 		return self.huds[pname][name]
 	end
 end
 hud.exists = hud.get
 
 function hud.change(self, player, name, def)
-	player = get_playerobj(player)
-	local pname = player:get_player_name()
+	local pobj = get_playerobj(player)
+	assert(pobj, "Attempt to change hud for offline player!")
 
+	local pname = get_playername(player)
 	assert(self.huds[pname] and self.huds[pname][name], "Attempt to change hud that doesn't exist!")
 
 	def = convert_def(def, def.hud_elem_type or self.huds[pname][name].def.hud_elem_type)
 
 	for stat, val in pairs(def) do
-		player:hud_change(self.huds[pname][name].id, stat, val)
+		pobj:hud_change(self.huds[pname][name].id, stat, val)
 		self.huds[pname][name].def[stat] = val
 	end
 end
 
 function hud.remove(self, player, name)
+	local pobj = get_playerobj(player)
+	assert(pobj, "Attempt to remove hud from offline player!")
+
 	local pname = get_playername(player)
-	player = pname and minetest.get_player_by_name(pname)
 
 	if name then
 		assert(self.huds[pname] and self.huds[pname][name], "Attempt to remove hud that doesn't exist!")
 
-		if player then
-			player:hud_remove(self.huds[pname][name].id)
-		end
+		pobj:hud_remove(self.huds[pname][name].id)
 
 		self.huds[pname][name] = nil
 	elseif self.huds[pname] then
 		if player then
 			for _, def in pairs(self.huds[pname]) do
-				player:hud_remove(def.id)
+				pobj:hud_remove(def.id)
 			end
 		end
 
