@@ -79,10 +79,10 @@ local function convert_def(def, type)
 		def.text  = def.text  or      def.texture
 		def.texture = nil
 
-		def.scale = def.scale or (def.image_scale and {x = def.image_scale})
+		def.scale = def.scale or (def.image_scale and {x = def.image_scale, y = def.image_scale})
 		def.image_scale = nil
 	else
-		minetest.log("error", "[MHUD] Hud type wasn't specified or is not supported")
+		minetest.log("error", "[MHUD] Hud type "..dump(type).." is not supported")
 	end
 
 	if def.alignment then
@@ -128,7 +128,7 @@ function hud.add(self, player, name, def)
 		self.huds[pname] = {}
 	end
 
-	def = convert_def(def, def.hud_elem_type)
+	def = convert_def(def, def.hud_elem_type or def.type)
 
 	local id = pobj:hud_add(def)
 
@@ -159,7 +159,10 @@ function hud.change(self, player, name, def)
 	local pname = get_playername(player)
 	assert(self.huds[pname] and self.huds[pname][name], "Attempt to change hud that doesn't exist!")
 
-	def = convert_def(def, def.hud_elem_type or self.huds[pname][name].def.hud_elem_type)
+	def = convert_def(
+		def, def.hud_elem_type or self.huds[pname][name].def.hud_elem_type or
+		def.type or self.huds[pname][name].def.type
+	)
 
 	for stat, val in pairs(def) do
 		pobj:hud_change(self.huds[pname][name].id, stat, val)
