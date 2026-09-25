@@ -24,6 +24,10 @@ end
 
 local function convert_def(def, type)
 	def = table.copy(def)
+	type = type or def.type or def.hud_elem_type
+	def.type = type
+	def.hud_elem_type = nil
+
 	if type == "text" then
 		def.number = def.number or      def.color
 		def.color = nil
@@ -160,13 +164,14 @@ function hud.change(self, player, name, def)
 	assert(self.huds[pname] and self.huds[pname][name], "Attempt to change hud that doesn't exist!")
 
 	def = convert_def(
-		def, def.hud_elem_type or self.huds[pname][name].def.hud_elem_type or
-		def.type or self.huds[pname][name].def.type
+		def, def.type or def.hud_elem_type or self.huds[pname][name].def.type
 	)
 
 	for stat, val in pairs(def) do
-		pobj:hud_change(self.huds[pname][name].id, stat, val)
-		self.huds[pname][name].def[stat] = val
+		if stat ~= "type" then
+			pobj:hud_change(self.huds[pname][name].id, stat, val)
+			self.huds[pname][name].def[stat] = val
+		end
 	end
 end
 
